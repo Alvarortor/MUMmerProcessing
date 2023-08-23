@@ -4,6 +4,14 @@ use warnings;
 use Bio::Seq;
 use Bio::SeqIO; 
 
+#README
+#Takes FASTA input sequence and trims according to mummer.mums coordinates
+#Output is formatted so that Excel can read and filter data
+
+
+
+
+#Program START
 #Checks to see if you have all required arguments
 if ($#ARGV !=2) {
 print "Usage: perl MUM2Seq.pl <Yourfile.mums> <ReferenceFile> <QueryFile>\n";
@@ -19,10 +27,7 @@ my $seqio_obj = Bio::SeqIO->new(-file => $Ref_File,
                              -format => "fasta" );
 while (my $seq_obj = $seqio_obj->next_seq ) {
 	my $seq = $seq_obj->seq;
-	
-	
-	
-	
+		
 my $count = 0;
 #Get Coords
 open(FH,'<', $mumsfile) or die $!;
@@ -39,8 +44,9 @@ my $end = $S1 + $LEN ;
 #Save the substring
 my $filename = <"RefSeq">;
 open(my $fh, '>',$filename) or die "oops!";
-#Below line is hidden bc its not needed for proof anymore
-print $fh "MUM $count [",$S1+1,"-",$end,"nt]\n", $substring,"\n\n";
+my $collabels = "Start\tLEN\tSequence\n";
+print $fh $collabels;
+print $fh $S1+1,"\t", $end+1,"\t", $substring,"\n";
 close $fh;
 
 #loop until all done
@@ -57,7 +63,7 @@ my $substring = substr($seq, $S1, $LEN);
 my $end = $S1 + $LEN;
 my $num = ++$count;
 #Write to file
-print $fh "MUM $num [",$S1+1,"-",$end+1,"nt]\n", $substring,"\n\n";
+print $fh $S1+1,"\t", $end+1,"\t", $substring,"\n";
 ;
 }
 close $fh;
@@ -92,7 +98,9 @@ my $end = $S1 + $LEN ;
 my $filename = <"QueSeq">;
 open(my $fh, '>',$filename) or die "oops!";
 #Below line is hidden bc its not needed for proof anymore
-print $fh "MUM $count [",$S1+1,"-",$end+1,"nt]\n", $substring,"\n\n";
+my $collabels = "Start\tLEN\tSequence\n";
+print $fh $collabels;
+print $fh $S1+1,"\t", $end+1,"\t", $substring,"\n";
 close $fh;
 
 #loop until all done
@@ -101,15 +109,15 @@ open($fh, '>>',$filename) or die "oops!";
 until( @number < 1)
 {
 @number = split(' ', <FH>);
-$S1 = $number[1]-1;
-$LEN = $number[2]+1;
+$S1 = $number[0]-1;
+$LEN = $number[2];
 
 #Produce substring
 my $substring = substr($seq, $S1, $LEN);
 my $end = $S1 + $LEN;
 my $num = ++$count;
 #Write to file
-print $fh "MUM $num [",$S1+1,"-",$end,"nt]\n", $substring,"\n\n";
+print $fh $S1+1,"\t", $end+1,"\t", $substring,"\n";
 ;
 }
 close $fh;
