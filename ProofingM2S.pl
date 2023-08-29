@@ -7,13 +7,13 @@ use warnings;
 #S1 and S2 from .mums file match the Starts for the RefSeq.txt and
 #QueSeq.txt outputs from MUM2Seq.pl program
 
-if ($#ARGV !=2) { #Checks to see if you have all required arguments
+if ($#ARGV !=0) { #Checks to see if you have all required arguments
 print "Usage: perl ProofingMUM2Seq.pl <Yourfile.mums> <RefSeq.txt> <QueSeq.txt>\n";
 exit;
 };
 my $filename2 = $ARGV[0];
-my $filename1 = $ARGV[1];
-my $filename3 = $ARGV[2];
+my $filename1 = "RefSeq.txt";
+my $filename3 = "QueSeq.txt";
 
 
 
