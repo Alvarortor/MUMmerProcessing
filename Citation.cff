@@ -3,6 +3,7 @@ message: "If you use this software, please cite it as below."
 authors:
 - family-names: "Ortola Tortosa"
   given-names: "Alvaro"
+orcid: "https://orcid.org/0009-0007-4907-5512"
 title: "MUM2Seq"
 date-released: 2023-08-24
 url: "https://github.com/Alvarortor/MUMmerProcessing"
